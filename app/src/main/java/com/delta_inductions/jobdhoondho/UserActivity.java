@@ -5,8 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +20,11 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employer);
+        setContentView(R.layout.activity_user);
         toolbar = findViewById(R.id.toolbar);
         toolbartext = findViewById(R.id.toolbartext);
         toolbar.inflateMenu(R.menu.menu_signout);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,Home_Fragment.newInstance(getIntent().getStringExtra("option"))).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,Home_Fragment.newInstance(getIntent().getStringExtra("option"),getIntent().getStringExtra("name"))).commit();
        bottomNavigationView = findViewById(R.id.bottom_navigation);
        bottomNavigationView.setOnNavigationItemSelectedListener(navlistner);
        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -36,7 +34,6 @@ public class UserActivity extends AppCompatActivity {
                {
                    Toast.makeText(UserActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
                    FirebaseAuth.getInstance().signOut();
-                   startActivity(new Intent(UserActivity.this,SigninActivity.class));
                    finish();
                }
                return false;
@@ -50,7 +47,7 @@ private BottomNavigationView.OnNavigationItemSelectedListener navlistner = new B
         switch(item.getItemId())
         {
             case R.id.nav_home: {
-                selectedfragment = Home_Fragment.newInstance(getIntent().getStringExtra("option"));
+                selectedfragment = Home_Fragment.newInstance(getIntent().getStringExtra("option"),getIntent().getStringExtra("name"));
                 toolbartext.setText("Home");
             }
                 break;
@@ -61,7 +58,7 @@ private BottomNavigationView.OnNavigationItemSelectedListener navlistner = new B
             }
                 break;
             case R.id.nav_profile: {
-                selectedfragment = new Profile_Fragment();
+                selectedfragment =  Profile_Fragment.newInstance(getIntent().getStringExtra("name"));
                 toolbartext.setText("Profile");
             }
                 break;

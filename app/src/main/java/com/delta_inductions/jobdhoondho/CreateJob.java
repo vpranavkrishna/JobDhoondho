@@ -51,6 +51,7 @@ public class CreateJob extends AppCompatActivity implements View.OnClickListener
     private boolean clickedonce = false;
     private Button post;
     private ProgressBar progressBar;
+    private String name;
 
 
     @Override
@@ -69,6 +70,7 @@ public class CreateJob extends AppCompatActivity implements View.OnClickListener
         Work_period.addTextChangedListener(textWatcher);
         Description.addTextChangedListener(textWatcher);
         post.setOnClickListener(this);
+        name = getIntent().getStringExtra("name");
     }
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -105,9 +107,10 @@ public class CreateJob extends AppCompatActivity implements View.OnClickListener
             String locationtext = location.getText().toString();
             String work_periodtext = Work_period.getText().toString();
             String descriptiontext = Description.getText().toString();
-            CollectionReference Postref = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("posts");
+            Log.d(TAG, "onClick: "+name);
+            CollectionReference Postref = FirebaseFirestore.getInstance().collection("users").document(getIntent().getStringExtra("name")).collection("posts");
             CollectionReference allpost = FirebaseFirestore.getInstance().collection("allposts");
-            DocumentReference profileref = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            DocumentReference profileref = FirebaseFirestore.getInstance().collection("users").document(getIntent().getStringExtra("name"));
             profileref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -115,8 +118,8 @@ public class CreateJob extends AppCompatActivity implements View.OnClickListener
                     {
                         mobilenumber = documentSnapshot.getString("mobilenumber");
                         Log.d(TAG, "onSuccess: "+mobilenumber);
-                        Postref.add(new Post(positiontext,salarytext,locationtext,work_periodtext,descriptiontext, Timestamp.now().toDate(),documentSnapshot.getString("mobilenumber"),false));
-                        allpost.add(new Post(positiontext,salarytext,locationtext,work_periodtext,descriptiontext, Timestamp.now().toDate(),documentSnapshot.getString("mobilenumber"),true));
+                        Postref.add(new Post(positiontext,salarytext,locationtext,work_periodtext,descriptiontext, Timestamp.now().toDate(),documentSnapshot.getString("mobilenumber"),false,name));
+                        allpost.add(new Post(positiontext,salarytext,locationtext,work_periodtext,descriptiontext, Timestamp.now().toDate(),documentSnapshot.getString("mobilenumber"),true,name));
 
                     }
                      else

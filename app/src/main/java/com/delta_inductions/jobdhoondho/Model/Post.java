@@ -11,10 +11,12 @@ public class Post {
     private String mobilenumber;
     private boolean applydisplay;
     private java.util.Date dateofpost;
+    private String employername;
+
 
 //    private @ServerTimestamp Date timestamp;
 
-    public Post(String position, String salary, String location, String work_period, String description, java.util.Date dateofpost,String mobilenumber,boolean applydisplay) {
+    public Post(String position, String salary, String location, String work_period, String description, java.util.Date dateofpost,String mobilenumber,boolean applydisplay,String employername) {
         this.position = position;
         this.salary = salary;
         this.location = location;
@@ -23,6 +25,7 @@ public class Post {
         this.mobilenumber = mobilenumber;
         this.dateofpost = dateofpost;
         this.applydisplay = applydisplay;
+        this.employername = employername;
     }
 
     public Post() {
@@ -56,5 +59,8 @@ public class Post {
 
     public boolean isApplydisplay() {
         return applydisplay;
+    }
+    public String getEmployername() {
+        return employername;
     }
 }

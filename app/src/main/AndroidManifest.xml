@@ -11,21 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewProfileWorker"></activity>
-        <activity android:name=".NewProfile" />
-        <activity
-            android:name=".CreateJob"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".SigninActivity">
+        <activity android:name=".NewProfileWorker" android:screenOrientation="portrait"></activity>
+        <activity android:name=".NewProfileEmployer" android:screenOrientation="portrait" />
+        <activity android:name=".CreateJob" android:screenOrientation="portrait" />
+        <activity android:name=".SigninActivity" android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN">
+                </action>
+                <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
-        <activity android:name=".UserActivity" />
-        <activity android:name=".WorkerOrEmployer" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".UserActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".WorkerOrEmployer" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

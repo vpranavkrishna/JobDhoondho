@@ -6,7 +6,6 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 
 public class WorkerOrEmployer extends AppCompatActivity implements View.OnClickListener{
 private CardView employer;
@@ -25,7 +24,7 @@ private CardView worker;
     public void onClick(View v) {
           switch (v.getId()) {
               case R.id.employer: {
-                  Intent intent = new Intent(this, NewProfile.class);
+                  Intent intent = new Intent(this, NewProfileEmployer.class);
                   intent.putExtra("option", "recruiter");
                   startActivity(intent);
                   finish();

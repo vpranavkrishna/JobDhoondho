@@ -28,6 +28,7 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.Post
         if(model.isApplydisplay())
         {
             holder.apply.setVisibility(View.VISIBLE);
+            holder.postby.setText("Post By-"+model.getEmployername());
         }
         else
         {
@@ -43,11 +44,13 @@ public class PostAdapter extends FirestoreRecyclerAdapter<Post, PostAdapter.Post
     }
 
     public class PostHolder extends RecyclerView.ViewHolder{
+        private  TextView postby;
         private TextView posttext;
         private Button  apply;
         public PostHolder(@NonNull View itemView) {
             super(itemView);
             posttext = itemView.findViewById(R.id.postjobdetails);
+            postby = itemView.findViewById(R.id.postby);
             apply = itemView.findViewById(R.id.btn_apply);
             apply.setOnClickListener(new View.OnClickListener() {
                 @Override

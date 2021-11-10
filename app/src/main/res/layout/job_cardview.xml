@@ -20,15 +20,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-            <TextView
-                android:id="@+id/postjobdetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nexabold"
-                android:padding="16dp"
-                android:text="Positions:Welder\n\nSalary:10000-15000 per month\n\nLocation:Chennai\n\nWork Period:6 months\n\nJob Description:You have to be highly skilled for this job you will be working in Apollo tyres Oragadam, food and shelter will be provided by the compnay if interested please apply"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/postby"
+                   android:text="Posted By- Pranav"
+                   android:layout_marginLeft="16dp"
+                   />
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/postjobdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nexabold"
+                    android:padding="16dp"
+                    android:text="Positions:Welder\n\nSalary:10000-15000 per month\n\nLocation:Chennai\n\nWork Period:6 months\n\nJob Description:You have to be highly skilled for this job you will be working in Apollo tyres Oragadam, food and shelter will be provided by the compnay if interested please apply"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="30dp"

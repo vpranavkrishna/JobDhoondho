@@ -32,16 +32,17 @@ import java.util.ArrayList;
 public class Home_Fragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "Home_Fragment";
     private static final String ARG_OPTION = "option";
+    private static final String ARG_NAME = "name";
     private View V;
     private String option;
+    private String name;
     private RecyclerView recyclerView;
     private ListenerRegistration postlistner;
     private FloatingActionButton fab;
     private FirestoreRecyclerOptions<Post> postsrec;
     private ProgressBar progressBar;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference profileref = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-    private CollectionReference Postref = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("posts");
+    private CollectionReference userref = db.collection("users");
     private CollectionReference allposts = db.collection("allposts");
     private PostAdapter adapter;
     private String username;
@@ -59,26 +60,29 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         progressBar.setVisibility(View.VISIBLE);
         if (getArguments() != null) {
             option = getArguments().getString(ARG_OPTION);
+            name = getArguments().getString(ARG_NAME);
+            setupRecyclerView();
         }
-        setupRecyclerView();
+
         fab.setOnClickListener(this);
-        ;
         return V;
     }
 
-    public static Home_Fragment newInstance(String option) {
+    public static Home_Fragment newInstance(String option ,String name) {
         Home_Fragment fragment = new Home_Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_OPTION, option);
+        args.putString(ARG_NAME,name);
         fragment.setArguments(args);
         return fragment;
     }
+
 
     private void setupRecyclerView() {
         progressBar.setVisibility(View.GONE);
         if (option.equals("recruiter")) {
             Log.d(TAG, "onSuccess: recruiter");
-            Query query = Postref.orderBy("dateofpost", Query.Direction.DESCENDING);
+            Query query = userref.document(name).collection("posts").orderBy("dateofpost", Query.Direction.DESCENDING);
             postsrec = new FirestoreRecyclerOptions.Builder<Post>().setQuery(query, Post.class).build();
         } else {
             Query query = allposts.orderBy("dateofpost", Query.Direction.DESCENDING);
@@ -94,7 +98,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                 String empnumber =documentSnapshot.getString("mobilenumber");
                 String positiontext = documentSnapshot.getString("position");
 //                String dateofpost = String.valueOf(documentSnapshot.getTimestamp("dateofpost"));
-                profileref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                userref.document(name).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                           @Override
                                                           public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                               username = documentSnapshot.getString("username");
@@ -112,7 +116,9 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(getContext(), CreateJob.class));
+       Intent intent =  new Intent(getActivity(), CreateJob.class);
+       intent.putExtra("name",name);
+       startActivity(intent);
     }
 
     @Override

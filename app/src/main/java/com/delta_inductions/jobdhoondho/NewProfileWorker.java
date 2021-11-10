@@ -81,13 +81,14 @@ private Intent intent;
     @Override
     public void onClick(View v) {
         if (mobilenumberinput.length() == 10) {
-            newprofileworker = new ProfileWorker(usernameinput, occupationinput, experienceinput, mobilenumberinput,"seeker",FirebaseAuth.getInstance().getCurrentUser().getUid());
-            userref.document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(newprofileworker).addOnSuccessListener(new OnSuccessListener<Void>() {
+            newprofileworker = new ProfileWorker(usernameinput, occupationinput, experienceinput, mobilenumberinput,"seeker",null);
+            userref.document(usernameinput).set(newprofileworker).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Toast.makeText(NewProfileWorker.this, "Profile created", Toast.LENGTH_SHORT).show();
                     intent = new Intent(NewProfileWorker.this, UserActivity.class);
                     intent.putExtra("option", "seeker");
+                    intent.putExtra("name",usernameinput);
                     startActivity(intent);
                     finish();
                 }
